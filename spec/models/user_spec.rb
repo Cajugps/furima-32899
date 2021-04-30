@@ -20,6 +20,18 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors.full_messages).to include('Email is invalid')
     end
+    it 'first_name、last_nameは漢字・平仮名・カタカナ以外では登録できないこと'do 
+        @user.first_name = 'aaa'
+        @user.last_name = 'aaa'
+        @user.valid?
+        expect(@user.errors.full_messages).to include("First name is invalid","Last name is invalid",)
+    end
+    it 'first_name_kana、last_name_kanaは全角カタカナ以外では登録できないこと' do 
+      @user.last_name_kana = 'ｶｴﾙ'
+      @user.first_name_kana ='ｳｻｷﾞ'
+      @user.valid?
+      expect(@user.errors.full_messages).to include("Last name kana is invalid", "First name kana is invalid")
+    end
     it '重複したemailが存在する場合登録できない' do
       @user.save
       another_user = FactoryBot.build(:user)
