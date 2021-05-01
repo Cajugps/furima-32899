@@ -10,13 +10,14 @@ class User < ApplicationRecord
        validates :last_name
        validates :first_name
        end 
-       with_options format: {with: /\A[ァ-ヶ]+\z/} do 
+       with_options format: {with: /\A[ァ-ヶ一-]+\z/} do 
        validates :last_name_kana
        validates :first_name_kana
        end 
-       end 
-       validates :birthday,presence: true
+       validates :birthday
        VALID_PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
-       validates :password,presence:true,format: { with: VALID_PASSWORD_REGEX }
+       validates :password,format: { with: VALID_PASSWORD_REGEX }
+       end 
+
 
 end
